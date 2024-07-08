@@ -31,7 +31,7 @@
                         <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                     </li>
                     <li><a class="nav-link" href="{% url 'shop' %}">Tienda</a></li>
-                    <li><a class="nav-link" href="{% url 'about' %}">Nosotros</a></li>
+                    <li><a class="nav-link" href="{% url 'about' %}">Contacto</a></li>
                 </ul>
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                     <li><a class="nav-link" href="{% url 'login' %}"><img src="{% static 'aplicacion/img/user.svg' %}"></a></li>
@@ -65,8 +65,8 @@
                         <table class="table">
                             <thead>
                                 <tr style="color: black;">
-                                    <th class="product-thumbnail">Imagen</th>
-                                    <th class="product-name">Producto</th>
+                                    <th class="product-thumbnail">Producto</th>
+                                    <th class="product-name">Articulo</th>
                                     <th class="product-price">Precio</th>
                                     <th class="product-quantity">Cantidad</th>
                                 </tr>
@@ -84,11 +84,11 @@
                                     <td>
                                         <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
                                             <div class="input-group-prepend">
-                                                <button class="btn btn-outline-black decrease" type="button" style="left: 100px;">-</button>
+                                                <button class="btn btn-outline-black decrease" type="button" style="left: 100px;"></button>
                                             </div>
                                             <input type="number" class="form-control text-center quantity-amount" value="{{ c.cantidad }}" placeholder="" aria-label="Cantidad" aria-describedby="button-addon1" min="1" step="1" disabled style="left: 100px;">
                                             <div class="input-group-append" >
-                                                <button class="btn btn-outline-black increase" type="button" style="left: 100px;">+</button>
+                                                <button class="btn btn-outline-black increase" type="button" style="left: 100px;"></button>
                                             </div>
                                         </div>
                                     </td>
@@ -112,9 +112,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="row mb-4">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <button class="btn btn-black btn-sm btn-block" onclick="updateCart()">Actualizar Carrito</button>
-                        </div>
+                        
                         <div class="col-md-6">
                             <a href="{% url 'shop' %}" class="btn btn-black btn-sm btn-block">Seguir Comprando</a>
                         </div>
@@ -151,10 +149,10 @@
             if (quantities.length === 0 || [...quantities].every(input => parseInt(input.value) === 0)) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'SIN PRODUCTOS',
-                    text: 'DEBES AGREGAR PRODUCTOS',
+                    title: '0 PRODUCTOS SELECCIONADOS',
+                    text: 'DEBES AGREGAR 1 PRODUCTO MINIMO',
                     showConfirmButton: true,
-                    confirmButtonText: 'Volver'
+                    confirmButtonText: 'Okey'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         
