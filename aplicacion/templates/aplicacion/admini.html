@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
+
+	<link rel="stylesheet" href="{%static "aplicacion/css/bootstrap.min.css"%}">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{%static "aplicacion/css/tiny-slider.css" %}" >
+	<link rel="stylesheet" href="{%static "aplicacion/css/style.css" %}" >
+    <title>Administrador</title>
+
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4" style="color: black;" >Admin</h1>
+                        <form action="{% url "panelcontrol" %}" method="get" id="formulariosesion">
+                            <div class="mb-3">
+                                <label for="usuario" class="form-label" style="color: black;">Administrador</label>
+                                <input type="text" class="form-control" id="usuario" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contraseña" class="form-label" style="color: black;">Contraseña</label>
+                                <input type="password" class="form-control" id="contraseña" required>
+                            </div>
+                            <input type="submit" value="Ingresar" class="btn btn-primarsy w-100">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src='{% static "aplicacion/js/validacionsesion.js" %}'></script>
+	<script src='{% static "aplicacion/js/bootstrap.bundle.min.js" %}'></script>
+    <script src='{% static "aplicacion/js/tiny-slider.js" %}'></script>
+    <script src='{% static "aplicacion/js/custom.js" %}'></script>
+</body>
+
+</html>

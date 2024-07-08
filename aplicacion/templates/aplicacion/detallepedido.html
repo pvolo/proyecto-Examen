@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Untree.co">
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap4" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'aplicacion/css/bootstrap.min.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'aplicacion/css/tiny-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'aplicacion/css/style.css' %}">
+    <title>Detalle de pedido</title>
+    <link rel="stylesheet" href="{% static 'aplicacion/css/styleestadopedido.css' %}">
+</head>
+
+<body>
+    <nav class="custom-navbarr navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar" style="font-weight: bold;">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">Pasión Alba<span>.</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsFurni">
+                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                    <li><a class="nav-link" href="{% url 'miscompras' %}">Mis Compras</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Inicio</a></li>
+                    <li><a class="nav-link" href="{% url 'shop' %}">Tienda</a></li>
+                    <li><a class="nav-link" href="{% url 'about' %}">Nosotros</a></li>
+                </ul>
+                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                    <li><a class="nav-link" href="{% url 'login' %}"><img src="{% static 'aplicacion/img/user.svg' %}"></a></li>
+                    <li><a class="nav-link" href="{% url 'cart' %}"><img src="{% static 'aplicacion/img/cart.svg' %}"></a></li>
+                    <li><a class="nav-link" href="{% url 'salir' %}">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero" style="background-color: rgb(26, 23, 23);">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt">
+                        <h1>Estado de tú Pedido</h1>
+                    </div>
+                </div>
+                <div class="col-lg-7"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="color: black;">
+
+        <div class="details">
+            <h2>Detalles de tú Compra</h2>
+            <table>
+                <tr>
+                    <th>Pedido</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                </tr>
+                {% for detallepedido in detallepedido %}
+                <tr>
+                    <td>{{ detallepedido.pedido }}</td>
+                    <td>{{ detallepedido.producto }}</td>
+                    <td>{{ detallepedido.cantidad }}</td>
+                </tr>
+                {% endfor %}
+                
+              {% comment %}   <tr>
+                    <td colspan="3"><strong>Total</strong></td>
+                    <td>{{ envio.get_total }}</td>
+                </tr> {% endcomment %}
+            </table>
+        </div>
+
+        <p>
+            <a href="{% url 'index' %}" class="btn btn-sm btn-outline-black">Volver al Inicio</a>
+        </p>
+    </div>
+
+    <script src='{% static "aplicacion/js/bootstrap.bundle.min.js" %}'></script>
+    <script src='{% static "aplicacion/js/tiny-slider.js" %}'></script>
+    <script src='{% static "aplicacion/js/custom.js" %}'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById("descargar-comprobante-btn").addEventListener("click", function() {
+            Swal.fire({
+                title: 'Descarga Realizada',
+                text: 'Descarga exitosa.',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3000 
+            }).then(() => {
+                window.location.href = "{% url 'index' %}";
+            });
+        });
+    </script>
+</body>
+
+</html>

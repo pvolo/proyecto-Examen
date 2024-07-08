@@ -1,0 +1,206 @@
+{% load static %}
+
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
+	
+	<link rel="stylesheet" href="{% static "aplicacion/css/bootstrap.min.css"%}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" >
+	<link rel="stylesheet" href="{% static "aplicacion/css/tiny-slider.css" %}" >
+	<link rel="stylesheet" href="{% static "aplicacion/css/style.css" %}" >
+	<title>Inicio </title> 
+</head>
+<body>
+	<nav class="custom-navbarr navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+			<a class="navbar-brand" href="{% url 'index' %}" style="font-weight: bold;">Pasión Alba<span>.</span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+				aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+	
+			<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+				<ul class="navbar-nav mb-2 mb-lg-0">
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'index' %}">Inicio</a>
+					</li>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'shop' %}">Tienda</a>
+					</li>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'about' %}">Contacto</a>
+					</li>
+					{% if user.is_authenticated and user.is_superuser %}
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'panelcontrol' %}">Administracion</a>
+					</li>
+					{% endif %}
+					{% if user.is_authenticated %}
+					<form action="{% url 'logout' %}" method="post">
+						{% csrf_token %}
+						<li class="nav-item">
+							<button type="submit" class="btn btn-link nav-link hover-effect" style="background: none;border: none;font-size: small;font-weight: 350;font-weight: bold;">Cerrar sesión</button>
+						</li>
+					</form>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'miscompras' %}">Mis pedidos</a>
+					</li>
+					<li class="nav-item ">
+						<a class="nav-link" style="text-align: center;">Hola!, {{user.username}}</a>
+					</li>
+					{% else %}
+					<li class="nav-item" style="margin-right: 20px;">
+						<a href="{% url 'login' %}" class="nav-link hover-effect">Iniciar sesión</a>
+					</li>
+					{% endif %}
+				</ul>
+				<a href="{% url 'cart' %}" class="nav-item hover-effect" style="margin-left: 70px;">
+					<img src="{% static 'aplicacion/img/cart.svg' %}" alt="Icono de carrito" style="width: 30px;">
+				</a>
+			</div>
+		</div>
+	</nav>
+    <div class="hero" style="background-color: rgb(26, 23, 23);">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt">
+                        {% if username %}
+                        <h1 style="color: white;">Bienvenido, {{ username }}</h1>
+                        {% else %}
+                        <h1>Bienvenido Tú</h1>
+                        {% endif %}
+                        <p class="mb-44" style="color: whitesmoke;">En Pasión Alba, celebramos la grandeza y la historia del Club Social y Deportivo Colo Colo con nuestra colección de camisetas y productos oficiales. Desde la emblemática camiseta blanca con la banda negra hasta diseños exclusivos que capturan la esencia del equipo más grande de Chile, cada artículo en nuestra tienda refleja la pasión y el orgullo de ser parte de la familia alba.</p>
+                        <p><a href="{% url 'shop' %}" class="btn btn-secondasry me-2">Ir Tienda</a></p>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="hero-img-wrap">
+						<img src="{% static 'aplicacion/img/campeon.jpg' %}" class="img-fluid" style="max-width: 435px; height: auto;" alt="Campeon">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+	<div class="product-section">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+					<h2 class="mb-4 section-title" style="font-weight: bold;">Camisetas Al Nivel</h2>
+					<p class="mb-4" style="color: black;">Explora nuestra selección cuidadosamente <br> curada, donde la calidad se combina con el <br> amor por los colores del Cacique. Ya seas un aficionado de toda la vida o estés descubriendo el legado de Colo Colo, encontrarás algo que llevará contigo en cada victoria y celebración. </p>
+				</div>
+
+                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<div class="product-item text-center">
+						<img src="{{ Local.imagen.url }}" class="img-fluid product-thumbnail" alt="{{ Local.nombre }}">
+						<h3 class="product-title">{{ Local.nombre }}</h3>
+						<strong class="product-price">${{ Local.precio }}</strong>
+						<div class="mt-3">
+							<a href="{% url 'comprar' Local.cod_producto %}" class="btn btn-outline-primary btn-sm">Obtener</a>
+						</div>
+					</div>
+				</div>
+
+                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<div class="product-item text-center">
+						<img src="{{ Tercero.imagen.url }}" class="img-fluid product-thumbnail" alt="{{ Tercero.nombre }}">
+						<h3 class="product-title">{{ Tercero.nombre }}</h3>
+						<strong class="product-price">${{ Tercero.precio }}</strong>
+						<div class="mt-3">
+							<a href="{% url 'comprar' Tercero.cod_producto %}" class="btn btn-outline-primary btn-sm">Obtener</a>
+						</div>
+					</div>
+				</div>
+
+                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<div class="product-item text-center">
+						<img src="{{ Visita.imagen.url }}" class="img-fluid product-thumbnail" alt="{{ Visita.nombre }}">
+						<h3 class="product-title">{{ Visita.nombre }}</h3>
+						<strong class="product-price">${{ Visita.precio }}</strong>
+						<div class="mt-3">
+							<a href="{% url 'comprar' Visita.cod_producto %}" class="btn btn-outline-primary btn-sm">Obtener</a>
+						</div>
+					</div>
+				</div>
+
+            </div>
+        </div>
+    </div>
+
+	<div class="why-choose-section">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-lg-6">
+					<h2 class="section-title" style="font-weight: bold;">¿Porque estamos Top en el Mercado?</h2>
+					<p style="color: black;">Estamos en la cima del mercado porque combinamos pasión, innovación y compromiso. Nuestro enfoque en la calidad, el servicio excepcional y la atención al detalle nos distingue. En cada paso, buscamos superar expectativas y crear experiencias memorables para nuestros clientes. ¡Únete a nosotros y descubre por qué somos líderes en nuestro sector!</p>
+					<img src="{% static "aplicacion/img/libertadores.jpg" %}" alt="Image" class="img-fluid" style="max-width: 300px; height: auto;">
+
+					<div class="row my-5">
+						<div class="col-6 col-md-6">
+							<div class="">
+								
+								<div class="icon">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6 col-md-6">
+							<div class="">
+								<div class="icon">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6 col-md-6">
+							<div class="">
+								<div class="icon">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6 col-md-6">
+							<div class="">
+								<div class="icon">
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-lg-5">
+					<div class="img-wrap">
+						<img src="{% static "aplicacion/img/logoColo.png" %}" alt="Image" class="img-fluid">
+						<p style="color: black;font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"> <br> <br> Colo Colo, un símbolo de lucha y perseverancia en cada partido, donde la historia se teje con la pasión de sus hinchas y el coraje de sus jugadores, siempre buscando alcanzar nuevas glorias en cada paso que da.</p>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- End Why Choose Us Section -->
+
+
+<!--<script src="js/bootstrap.bundle.min.js"></script> -->
+	<script src='{% static "aplicacion/js/bootstrap.bundle.min.js" %}'></script>
+<!--<script src="js/tiny-slider.js"></script>  -->
+	<script src='{% static "aplicacion/js/tiny-slider.js" %}'></script>
+<!--<script src="js/custom.js"></script> -->
+	<script src='{% static "aplicacion/js/custom.js" %}'></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+{% if not request.user.is_authenticated %}
+
+{% endif %}
+
+</html>

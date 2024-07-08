@@ -1,0 +1,159 @@
+{% load static %}
+
+<!doctype html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
+
+	<link rel="stylesheet" href="{%static "aplicacion/css/bootstrap.min.css"%}">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="{%static "aplicacion/css/tiny-slider.css" %}" >
+	<link rel="stylesheet" href="{%static "aplicacion/css/style.css" %}" >
+	<title>Somos</title>
+</head>
+
+<body>
+	<nav class="custom-navbarr navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+			<a class="navbar-brand" href="{% url 'index' %}" style="font-weight: bold;">Pasión Alba<span>.</span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+				aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+	
+			<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+				<ul class="navbar-nav mb-2 mb-lg-0">
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'index' %}">Inicio</a>
+					</li>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'shop' %}">Tienda</a>
+					</li>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'about' %}">Contacto</a>
+					</li>
+					{% if user.is_authenticated and user.is_superuser %}
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'panelcontrol' %}">Administracion</a>
+					</li>
+					{% endif %}
+					{% if user.is_authenticated %}
+					<form action="{% url 'logout' %}" method="post">
+						{% csrf_token %}
+						<li class="nav-item">
+							<button type="submit" class="btn btn-link nav-link hover-effect" style="background: none;border: none;font-size: small;font-weight: 350;font-weight: bold;">Cerrar sesión</button>
+						</li>
+					</form>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'miscompras' %}">Mis pedidos</a>
+					</li>
+					<li class="nav-item ">
+						<a class="nav-link" style="text-align: center;">Hola!, {{user.username}}</a>
+					</li>
+					{% else %}
+					<li class="nav-item" style="margin-right: 20px;">
+						<a href="{% url 'login' %}" class="nav-link hover-effect">Iniciar sesión</a>
+					</li>
+					{% endif %}
+				</ul>
+				<a href="{% url 'cart' %}" class="nav-item hover-effect" style="margin-left: 70px;">
+					<img src="{% static 'aplicacion/img/cart.svg' %}" alt="Icono de carrito" style="width: 30px;">
+				</a>
+			</div>
+		</div>
+	</nav>
+			<div class="hero" style="background-color: rgb(26, 23, 23);">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>En Pasion Alba</h1>
+								<p class="mb-4">Ofrecemos la mejor selección de productos de Colo-Colo FC. Nos apasiona el fútbol y nos esforzamos por brindar productos de alta calidad y un excelente servicio. Queremos ser el destino número uno para los aficionados de Colo-Colo. Gracias por ser parte de nuestra comunidad y lucir los colores con orgullo.</p>
+								
+										
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="hero-img-wrap">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	<div class="why-choose-section">
+		<div class="container">
+			<div class="row justify-content-between align-items-center">
+				<div class="col-lg-6">
+					<h2 class="section-title" style="font-weight: bold;">¿Porque estamos Top en el Mercado?</h2>
+					<p style="color: black;">"Estamos en la cima del mercado porque combinamos pasión, innovación y compromiso. Nuestro enfoque en la calidad, el servicio excepcional y la atención al detalle nos distingue. En cada paso, buscamos superar expectativas y crear experiencias memorables para nuestros clientes. ¡Únete a nosotros y descubre por qué somos líderes en nuestro sector!"</p>
+
+					<div class="row my-5">
+						<div class="col-6 col-md-6">
+							<div class="feature">
+								<div class="icon">
+									<img src="{% static "aplicacion/img/truck.svg" %}" alt="Image" class="imf-fluid">
+								</div>
+								<h3 style="font-weight: bold;">Envíos Gratis</h3>
+							</div>
+						</div>
+
+						<div class="col-6 col-md-6">
+							<div class="feature">
+								<div class="icon">
+									<img src="{% static "aplicacion/img/bag.svg" %}" alt="Image" class="imf-fluid">
+								</div>
+								<h3 style="font-weight: bold;">Compra Facil</h3>
+							</div>
+						</div>
+
+						<div class="col-6 col-md-6">
+							<div class="feature">
+								<div class="icon">
+									<img src="{% static "aplicacion/img/support.svg" %}" alt="Image" class="imf-fluid">
+								</div>
+								<h3 style="font-weight: bold;">Atención al cliente</h3>
+								<p>Vía Email: blancoynegrosports7@gmail.com</p>
+							</div>
+						</div>
+
+						<div class="col-6 col-md-6">
+							<div class="feature">
+								<div class="icon">
+									<img src="{% static "aplicacion/img/return.svg" %}" alt="Image" class="imf-fluid">
+								</div>
+								<h3 style="font-weight: bold;">¿Hay Garantia? </h3>
+								<p>Si, Solo por fallos de fabrica.</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-lg-5">
+					<div class="img-wrap">
+						<img src="{% static "aplicacion/img/Campeonn.jpeg" %}" alt="Image" class="img-fluid">
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- End Why Choose Us Section -->
+
+	<!--<script src="js/bootstrap.bundle.min.js"></script> -->
+	<script src='{% static "aplicacion/js/bootstrap.bundle.min.js" %}'></script>
+<!--<script src="js/tiny-slider.js"></script>  -->
+	<script src='{% static "aplicacion/js/tiny-slider.js" %}'></script>
+<!--<script src="js/custom.js"></script> -->
+	<script src='{% static "aplicacion/js/custom.js" %}'></script>
+</body>
+
+</html>

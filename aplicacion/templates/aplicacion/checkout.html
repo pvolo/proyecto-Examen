@@ -1,0 +1,211 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Untree.co">
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap4" />
+    <link rel="stylesheet" href="{% static 'aplicacion/css/bootstrap.min.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'aplicacion/css/tiny-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'aplicacion/css/style.css' %}">
+    <title>Checkout</title>
+</head>
+
+<body>
+    <nav class="custom-navbarr navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar" style="font-weight: bold;">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">Pasión Alba<span>.</span></a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsFurni">
+                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                    <li><a class="nav-link" href="{% url 'miscompras' %}">Mis Compras</a></li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                    </li>
+                    <li><a class="nav-link" href="{% url 'shop' %}">Tienda</a></li>
+                    <li><a class="nav-link" href="{% url 'about' %}">Nosotros</a></li>
+                </ul>
+
+                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                    <li><a class="nav-link" href="{% url 'login' %}"><img src="{% static 'aplicacion/img/user.svg' %}"></a></li>
+                    <li><a class="nav-link" href="{% url 'cart' %}"><img src="{% static 'aplicacion/img/cart.svg' %}"></a></li>
+                    <li><a class="nav-link" href="{% url 'salir' %}">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Header/Navigation -->
+    <!-- Start Hero Section -->
+    <div class="hero" style="background-color: rgb(26, 23, 23);">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt">
+                        <h1>Proceso de Pago</h1>
+                    </div>
+                </div>
+                <div class="col-lg-7"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="untree_co-section">
+        <form action="{% url 'thankyou' %}" method="POST" id="formulario">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-12"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-5 mb-md-0">
+                        <h2 class="h3 mb-3 text-black">Detalles de Boleta</h2>
+                        <div class="p-3 p-lg-5 border bg-white">
+                            <div class="form-group">
+                                <label for="c_country" class="text-black">Región <span class="text-danger">*</span></label>
+                                <select id="c_country" class="form-control" name="region" required>
+                                    <option value="1">Seleccione una Región</option>
+                                    <option value="ARICA Y PARINACOTA">Región de Arica y Parinacota</option>
+                                    <option value="TARAPACA">Región de Tarapacá</option>
+                                    <option value="ANTOFAGASTA">Región de Antofagasta</option>
+                                    <option value="ATACAMA">Región de Atacama</option>
+                                    <option value="COQUIMBO">Región de Coquimbo</option>
+                                    <option value="VALPARAISO">Región de Valparaíso</option>
+                                    <option value="METROPOLITANA">Región Metropolitana de Santiago</option>
+                                    <option value="O'HIGGINS">Región del Libertador General Bernardo O'Higgins</option>
+                                    <option value="MAULE">Región del Maule</option>
+                                    <option value="ÑUBLE">Región de Ñuble</option>
+                                    <option value="BIOBIO">Región del Biobío</option>
+                                    <option value="ARAUCANIA">Región de la Araucanía</option>
+                                    <option value="LOS RIOS">Región de Los Ríos</option>
+                                    <option value="LOS LAGOS">Región de Los Lagos</option>
+                                    <option value="AYSEN">Región de Aysén del General Carlos Ibáñez del Campo</option>
+                                    <option value="MAGALLANES">Región de Magallanes y de la Antártica Chilena</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="primer_nombre" class="text-black">Primer Nombre <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="primer_nombre" name="primer_nombre" required placeholder="Ingrese su primer Nombre">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="segundo_nombre" class="text-black">Segundo Nombre <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="segundo_nombre" name="segundo_nombre" required placeholder="Ingrese su segundo Nombre">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="apeliido" class="text-black">Apellidos </label>
+                                    <input type="text" class="form-control" id="apellido" name="apellido" required placeholder="Ingrese sus Apellidos">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="direccion" class="text-black">Dirección <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="direccion" name="direccion" required placeholder="Dirección donde desea recibir su pedido">
+                                </div>
+                            </div>
+
+                            <div class="form-group mt-3"> 
+                                <input type="text" class="form-control" id="direccion2" placeholder="Departamento, N° Pasaje. (opcional)">
+                            </div>
+
+                            <div class="form-group row mb-5">
+                                <div class="col-md-6">
+                                    <label for="correo" class="text-black">Tú Correo electrónico <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su Correo electrónico" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="celular" class="text-black">Num Celular <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="celular" name="celular" required placeholder="Numero de celular">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <h2 class="h3 mb-3 text-black">Tu orden</h2>
+                                <div class="p-3 p-lg-5 border bg-white">
+                                    <table class="table site-block-order-table mb-5">
+                                        <thead>
+                                        
+                                            <th>Total</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            </tr>
+                                            <tr>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-black font-weight-bold"><strong>Subtotal</strong></td>
+                                                <td class="text-black">${{ subtotal }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-black font-weight-bold"><strong>Total Compra</strong></td>
+                                                <td class="text-black font-weight-bold"><strong>${{ subtotal }}</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    
+                                    <div >
+                                        <input type="submit" value="Realizar pedido" class="btn btn-black btn-lg py-3 btn-block">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--<script src="js/validacion.js"></script>-->
+    <script src='{% static "aplicacion/js/validacion.js" %}'></script>
+    <!--<script src="js/bootstrap.bundle.min.js"></script> -->
+    <script src='{% static "aplicacion/js/bootstrap.bundle.min.js" %}'></script>
+    <!--<script src="js/tiny-slider.js"></script>  -->
+    <script src='{% static "aplicacion/js/tiny-slider.js" %}'></script>
+    <!--<script src="js/custom.js"></script> -->
+    <script src='{% static "aplicacion/js/custom.js" %}'></script>
+
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            Swal.fire({
+                title: 'Compra exitosa',
+                text: 'Su pedido se ha hecho correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+			}).then((result) => {
+                if (result.isConfirmed) {
+                    setTimeout(() => {
+
+                        this.submit();
+                    }, 2000); 
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+
+<script src='{% static "aplicacion/js/validacion.js" %}'></script>

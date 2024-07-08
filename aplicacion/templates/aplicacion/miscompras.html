@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras</title>
+    <link href="{% static 'aplicacion/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="{% static 'aplicacion/css/tiny-slider.css' %}" rel="stylesheet">
+    <link href="{% static 'aplicacion/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'aplicacion/css/stylemiscompras.css' %}" rel="stylesheet">
+</head>
+<body>
+    <nav class="custom-navbarr navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+			<a class="navbar-brand" href="{% url 'index' %}" style="font-weight: bold;">Pasión Alba<span>.</span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+				aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+	
+			<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+				<ul class="navbar-nav mb-2 mb-lg-0">
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'index' %}">Inicio</a>
+					</li>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'shop' %}">Tienda</a>
+					</li>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'about' %}">Contacto</a>
+					</li>
+					{% if user.is_authenticated and user.is_superuser %}
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'panelcontrol' %}">Administracion</a>
+					</li>
+					{% endif %}
+					{% if user.is_authenticated %}
+					<form action="{% url 'logout' %}" method="post">
+						{% csrf_token %}
+						<li class="nav-item">
+							<button type="submit" class="btn btn-link nav-link hover-effect" style="background: none;border: none;font-size: small;font-weight: 350;font-weight: bold;">Cerrar sesión</button>
+						</li>
+					</form>
+					<li class="nav-item" style="margin-right: 20px;">
+						<a class="nav-link hover-effect" href="{% url 'miscompras' %}">Mis pedidos</a>
+					</li>
+					<li class="nav-item ">
+						<a class="nav-link" style="text-align: center;">Hola!, {{user.username}}</a>
+					</li>
+					{% else %}
+					<li class="nav-item" style="margin-right: 20px;">
+						<a href="{% url 'login' %}" class="nav-link hover-effect">Iniciar sesión</a>
+					</li>
+					{% endif %}
+				</ul>
+				<a href="{% url 'cart' %}" class="nav-item hover-effect" style="margin-left: 70px;">
+					<img src="{% static 'aplicacion/img/cart.svg' %}" alt="Icono de carrito" style="width: 30px;">
+				</a>
+			</div>
+		</div>
+	</nav>
+
+<div class="untree_co-section product-section before-footer-section" style="color: black;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header" style="background-color: rgb(26, 23, 23);">
+                        <h2 class="card-title">Historial de mis Compras</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="product-table" >
+                            <thead>
+                                <tr>
+                                    <th style="background-color: rgb(26, 23, 23);">N° Pedido</th>
+                                    <th style="background-color: rgb(26, 23, 23);">Nombre Cliente</th>
+                                    <th style="background-color: rgb(26, 23, 23);">Dirección</th>
+                                    <th style="background-color: rgb(26, 23, 23);">Correo Electronico</th>
+                                    <th style="background-color: rgb(26, 23, 23);">N° Celular</th>
+                                    <th style="background-color: rgb(26, 23, 23);">Región</th>
+                                    <th style="background-color: rgb(26, 23, 23);">Fecha Compra</th>
+                                    <th style="background-color: rgb(26, 23, 23);">Estado Pedido</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pedido in pedidos %}
+                                <tr>
+                                    <td>{{ pedido.id }}</td>
+                                    <td>{{ pedido.nombre_cliente }}</td>
+                                    <td>{{ pedido.direccion }}</td>
+                                    <td>{{ pedido.correo }}</td>
+                                    <td>{{ pedido.celular }}</td>
+                                    <td>{{ pedido.region }}</td>
+                                    <td>{{ pedido.fecha_pedido }}</td>
+                                    <td><p class="success">¡ {{pedido.estado}} !</p></td>
+                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.btn-detalle').forEach(btn => {
+        btn.addEventListener('click', function() {
+            window.location.href = "{% url 'estado' %}";
+        });
+    });
+</script>
+<script>
+$(document).ready(function() {
+    $('.btn-detalle-boleta').click(function() {
+        const boleta = $(this).data('boleta');
+        alert(`Detalles de Boleta:\n${boleta}`);
+    });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    $('.btn-detalle').click(function() {
+    });
+});
+
+function actualizarEstado(selectElement, pedid  oId) {
+    const nuevoEstado = selectElement.value;
+    fetch(`/api/actualizar_estado_pedido/${pedidoId}/${nuevoEstado}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al actualizar estado del pedido');
+        }
+        // Actualización exitosa, actualiza la interfaz de usuario
+        $(`#estado-pedido-${pedidoId}`).text(nuevoEstado); 
+    })
+    .catch(error => console.error('Error al actualizar estado:', error));
+}
+
+</script>
+<script src="{% static 'aplicacion/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

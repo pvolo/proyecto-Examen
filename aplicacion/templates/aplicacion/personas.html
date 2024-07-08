@@ -1,0 +1,86 @@
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Untree.co">
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap4" />
+    <link href="{% static 'aplicacion/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="{% static 'aplicacion/css/tiny-slider.css' %}" rel="stylesheet">
+    <link href="{% static 'aplicacion/css/style.css' %}" rel="stylesheet">
+    <title>Personas</title>
+
+</head>
+<nav class="custom-navbarr navbar navbar-expand-md navbar-dark bg-dark" aria-label="Furni navigation bar" style="font-weight: bold;">
+    <div class="container">
+        <a class="navbar-brand" href="{% url "panelcontrol" %}">Pasión Alba<span>.</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+            aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'panelcontrolestadocompra' %}">Estado de Compra</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'personas' %}">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'shop' %}">Tienda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'panelcerrarsesion' %}">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <div class="container">
+        <div class="mt-4">
+            <h3 style="color: black;font-weight: bold;">Lista de Empleados</h3>
+            <a href="{% url 'crearpersona' %}" role="button" class="btn text-primarsy" style="color: white;">+ Agregar Persona</a>
+        </div>
+        <p>{{ fecha }}</p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Identificador</th>
+                    <th>Primer nombre</th>
+                    <th>Primer apellido</th>
+                    <th>Segundo apellido</th>
+                    <th>Correo</th>
+                    <th>Celular</th>
+                    <th>Región</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in personas %}
+                <tr>
+                    <td><img src="{{ p.imagen.url }}" alt="foto" height="150"></td>
+                    <td>{{ p.cod_persona }}</td>
+                    <td>{{ p.pnombre }}</td>
+                    <td>{{ p.apellidop }}</td>
+                    <td>{{ p.apellidom }}</td>
+                    <td>{{ p.correo }}</td>
+                    <td>{{ p.celular }}</td>
+                    <td>{{ p.region }}</td>
+                    <td>
+                        <a href="{% url 'modificar_persona' p.cod_persona %}">Editar</a>
+                        <a href="{% url 'eliminarpersona' p.cod_persona %}">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="back-button">
+            <a href="{% url 'panelcontrol' %}" class="btn btn-secondarsy">Volver</a>
+        </div>
+    </div>
+</body>

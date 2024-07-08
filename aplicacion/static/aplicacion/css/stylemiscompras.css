@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #EEEEEE; 
+}
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    background-color: #FFFFFF; 
+}
+.card-header {
+    background-color: #171a15; 
+    color: #FFFFFF;
+}
+.card-body {
+    padding: 20px;
+}
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+.btn-primary {
+    background-color: #0e110c; 
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #0e110c; 
+}
+.btn-secondary {
+    background-color: #DDDDDD; 
+    border: none;
+}
+.btn-secondary:hover {
+    background-color: #EEEEEE;
+}
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.product-table th, .product-table td {
+    padding: 10px;
+    border: 1px solid #DDDDDD; 
+}
+.product-table th {
+    background-color: #0e110c; 
+    color: #FFFFFF;
+}
+.product-table td {
+    text-align: left;
+}
+.product-table img {
+    max-width: 100px;
+    margin-right: 10px; 
+}
+.entregado {
+    background-color: #C8E6C9; 
+}
+.cancelado {
+    background-color: #FFCCBC; 
+}
+.reembolsado {
+    background-color: #FFEBEE; 
+}

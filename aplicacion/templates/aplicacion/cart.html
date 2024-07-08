@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Untree.co">
+    <meta name="description" content="">
+    <meta name="keywords" content="bootstrap, bootstrap4">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="{% static 'aplicacion/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'aplicacion/css/tiny-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'aplicacion/css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{% static 'aplicacion/js/tiny-slider.js' %}"></script>
+    <script src="{% static 'aplicacion/js/custom.js' %}"></script>
+</head>
+<body>
+    <nav class="custom-navbarr navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar" style="font-weight: bold;">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">Pasión Alba<span>.</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+                    aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsFurni">
+                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                    <li><a class="nav-link" href="{% url 'miscompras' %}">Mis Compras</a></li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                    </li>
+                    <li><a class="nav-link" href="{% url 'shop' %}">Tienda</a></li>
+                    <li><a class="nav-link" href="{% url 'about' %}">Nosotros</a></li>
+                </ul>
+                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                    <li><a class="nav-link" href="{% url 'login' %}"><img src="{% static 'aplicacion/img/user.svg' %}"></a></li>
+                    <li><a class="nav-link" href="{% url 'cart' %}"><img src="{% static 'aplicacion/img/cart.svg' %}"></a></li>
+                    <li><a class="nav-link" href="{% url 'salir' %}">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="hero" style="background-color: rgb(26, 23, 23);">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt">
+                        <h1>Mi Carrito de Compras</h1>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="untree_co-section before-footer-section">
+        <div class="container">
+            <div class="row mb-5">
+                <form class="col-md-12" method="post" action="{% url 'cart' %}">
+                    {% csrf_token %}
+                    <div class="site-blocks-table">
+                        <table class="table">
+                            <thead>
+                                <tr style="color: black;">
+                                    <th class="product-thumbnail">Imagen</th>
+                                    <th class="product-name">Producto</th>
+                                    <th class="product-price">Precio</th>
+                                    <th class="product-quantity">Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for c in carritos %}
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="{{ c.producto.imagen.url }}" alt="{{ c.producto.nombre }}" class="img-fluid">
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">{{ c.producto.nombre }}</h2>
+                                    </td>
+                                    <td class="product-price"> ${{ c.producto.precio }}</td>
+                                    <td>
+                                        <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-black decrease" type="button" style="left: 100px;">-</button>
+                                            </div>
+                                            <input type="number" class="form-control text-center quantity-amount" value="{{ c.cantidad }}" placeholder="" aria-label="Cantidad" aria-describedby="button-addon1" min="1" step="1" disabled style="left: 100px;">
+                                            <div class="input-group-append" >
+                                                <button class="btn btn-outline-black increase" type="button" style="left: 100px;">+</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="{% url 'cart' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{ c.id }}">
+                                            <button type="submit" class="btn btn-black btn-sm btn-remove">Eliminar Producto</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <button class="btn btn-black btn-sm btn-block" onclick="updateCart()">Actualizar Carrito</button>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'shop' %}" class="btn btn-black btn-sm btn-block">Seguir Comprando</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <h3 class="text-black h4 text-uppercase mb-4" style="font-weight: bold;">Total Compra</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6 text-left">
+                                <span class="text-black">Subtotal</span>
+                            </div>
+                            <div class="col-md-6 text-right" id="subtotal">
+                                <strong class="text-black">${{ subtotal }}</strong>
+                            </div>
+                        </div>
+                        <form id="checkout-form" action="{% url 'checkout' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="subtotal" value="{{ subtotal }}">
+                            <button type="submit" class="btn btn-black btn-lg py-3 btn-block" >Ir a Pagar</button>
+                        </form>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkCart(event) {
+            event.preventDefault(); 
+    
+            const quantities = document.querySelectorAll('.quantity-amount');
+            if (quantities.length === 0 || [...quantities].every(input => parseInt(input.value) === 0)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'SIN PRODUCTOS',
+                    text: 'DEBES AGREGAR PRODUCTOS',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Volver'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+                    }
+                });
+            } else {
+                // 
+                document.querySelector('#checkout-form').submit();
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkoutForm = document.querySelector('#checkout-form');
+            checkoutForm.addEventListener('submit', function (event) {
+                checkCart(event); 
+            });
+        });
+    </script>
+
+    <script>
+        updateCart()
+        function updateCart() {
+            const quantityInputs = document.querySelectorAll('.quantity-amount');
+            let newSubtotal = 0;
+
+            quantityInputs.forEach(input => {
+                const quantity = parseInt(input.value);
+                const price = parseFloat(input.closest('tr').querySelector('.product-price').innerText.replace('$', '').trim());
+                const total = quantity * price;
+                newSubtotal += total;
+            });
+
+            document.getElementById('subtotal').innerHTML = `<strong class="text-black">$${newSubtotal.toFixed(2)}</strong>`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCart();   
+        });
+    </script>
+    <script src="{% static 'aplicacion/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'aplicacion/js/cart.js' %}"></script>
+
+</body>
+</html>
