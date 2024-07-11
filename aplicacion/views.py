@@ -3,6 +3,7 @@ from django.utils import timezone #para importar la hora , es para el carro y su
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 #desde el crud del profe
+
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -307,16 +308,11 @@ def thankyou(request):
 
  
 def personas(request):
- 
-    
-    personas=Persona.objects.all()
-
-    datos={
-
-        "personas":personas
+    usuarios = User.objects.exclude(email='')
+    datos = {
+        "usuarios": usuarios
     }
-
-    return render(request,'aplicacion/personas.html', datos)
+    return render(request, 'aplicacion/personas.html', datos)
 
 def crearpersona(request):
     form=PersonaForm()
@@ -548,3 +544,5 @@ def actualizar_cantidad(request, id):
 
         return JsonResponse({'subtotal': carrito[id]['subtotal'], 'total': total})
     return redirect('carrito')  
+
+
